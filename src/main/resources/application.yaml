@@ -1,0 +1,72 @@
+spring:
+  config:
+    activate:
+      on-profile: default
+
+server:
+  port: 8089
+  error:
+    include-message: always
+    include-binding-errors: always
+    include-stacktrace: on_trace_param
+    include-exception: false
+imdb:
+  rapidApi:
+    host: movie-database-imdb-alternative.p.rapidapi.com
+    apiKey: eb72238576mshd5b554719b2d021p15bbf4jsnb9e412981f9f
+    timeout: 10000
+
+movieservice:
+  imdb:
+    host: movie-database-imdb-alternative.p.rapidapi.com
+    apiKey: eb72238576mshd5b554719b2d021p15bbf4jsnb9e412981f9f
+    timeout: 1000
+  youTube:
+    timeout: 100000
+    apiKey: AIzaSyDSCyCxmxM5PdpiBEgNSn9Dwcsb1Nxa4pQ
+    threads: 10
+  redis:
+    host: redis
+    port: 6379
+    ttl: 3600
+  pageSize: 10
+
+
+
+---
+spring:
+  config:
+    activate:
+      on-profile: test
+  redis:
+    host: localhost
+    port: 6379
+    ttl: 3600
+
+  server:
+    port: 8089
+    error:
+      include-message: always
+      include-binding-errors: always
+      include-stacktrace: on_trace_param
+      include-exception: false
+imdb:
+    rapidApi:
+      host: movie-database-imdb-alternative.p.rapidapi.com
+      apiKey: eb72238576mshd5b554719b2d021p15bbf4jsnb9e412981f9f
+      timeout: 10000
+
+movieservice:
+    imdb:
+      host: movie-database-imdb-alternative.p.rapidapi.com
+      apiKey: eb72238576mshd5b554719b2d021p15bbf4jsnb9e412981f9f
+      timeout: 1000
+    youTube:
+      timeout: 1000
+      apiKey: AIzaSyDSCyCxmxM5PdpiBEgNSn9Dwcsb1Nxa4pQ
+      threads: 2
+    redis:
+      host: localhost
+      port: 6379
+      ttl: 1
+    pageSize: 1
