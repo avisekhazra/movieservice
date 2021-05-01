@@ -1,6 +1,5 @@
 package com.movie.trailer.movieservice.exception;
 
-import com.movie.trailer.movieservice.controller.MovieServiceController;
 import com.movie.trailer.movieservice.exception.beans.TrailersNotFoundException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;

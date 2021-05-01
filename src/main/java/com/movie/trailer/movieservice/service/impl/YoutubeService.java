@@ -65,7 +65,6 @@ public class YoutubeService implements IYoutubeService {
         var youTube = new YouTube.Builder(new NetHttpTransport(), new GsonFactory(), httpRequest -> {
 
         }).setApplicationName("movie-trailer").build();
-
         YouTube.Search.List search = youTube.search().list(Collections.singletonList("id,snippet"));
         search.setKey(movieServiceConfiguration.getYouTube().getApiKey());
         search.setQ(name + " trailer");
