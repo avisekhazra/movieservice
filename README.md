@@ -19,8 +19,7 @@ Maven 3.3.9 +
 ## Application Overview
 
 #### Current Architecture
-
-![1620057328764](C:\Users\GEBRUI~1\AppData\Local\Temp\1620057328764.png)
+![image](https://user-images.githubusercontent.com/19636598/116925298-4be07480-ac59-11eb-8eb5-15cbea324736.png)
 
 
 
@@ -84,8 +83,8 @@ Application is dockerized with two containers - Application container and Redis 
 
 
 #### Desired architecture
+![image](https://user-images.githubusercontent.com/19636598/116925339-5a2e9080-ac59-11eb-80e3-0a164d2f1d4f.png)
 
-![1620058208643](C:\Users\GEBRUI~1\AppData\Local\Temp\1620058208643.png)
 
 
 
