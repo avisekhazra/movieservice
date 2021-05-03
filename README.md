@@ -2,7 +2,7 @@
 
 Instructions to deploy the solution to local,
 
-1. git clone <repo>
+1. git clone https://github.com/avisekhazra/movieservice.git
 2. cd movieservice
 3. docker compose up --build -d
 
