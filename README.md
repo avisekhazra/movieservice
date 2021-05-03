@@ -58,17 +58,28 @@ Pagination has been implemented in the service. Default page size is 10.
 
 Multithreading has been used to do parallel processing.
 
+Few Spring concept has been used, Controller, ControllerAdvice for validating the input as well as custom error handling, ConfigurationProperties to bootstrap the configurations.
+
+#### Unit testing
+
+Unit testing has been implemented with Junit5. 
+
+Few Extensions/library used - Mockito, BDD Mockito, AssertJ, MockMvc etc.
+
+Unit tests have been implemented for Services and the controller with more than 94% coverage.
+
+To run the unit test cases,
+
+- start redis locally - docker run --name my-first-redis -p 6379:6379 -d redis
+- navigate to the folder where pom.xml is there and run ->  mvn test -Ptest
+
+Test coverage report is located at -  ~ /target/site/jacoco/index.html
+
 
 
 #### Others:
 
 Application is dockerized with two containers - Application container and Redis container as Sidecar pattern (docker compose).
-
-Junit + Mockito + AssertJ + MockMvc have been used to implement unit testing.
-
-Pagination has been implemented in the service.
-
-For now only support for English language has been built.
 
 
 

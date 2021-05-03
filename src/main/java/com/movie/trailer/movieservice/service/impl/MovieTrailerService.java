@@ -72,7 +72,7 @@ public class MovieTrailerService implements IMovieTrailerService {
         if(bean.getPage()<=1){
            meta.setPage(1);
            startIndex = 0;
-            endIndex = trailers.size()<10 ?  trailers.size(): 10;
+            endIndex = trailers.size()<pageSize ?  trailers.size(): pageSize;
         }else{
 
             startIndex = (bean.getPage()-1) * pageSize -1;

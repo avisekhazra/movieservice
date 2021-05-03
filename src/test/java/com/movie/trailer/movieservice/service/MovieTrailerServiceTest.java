@@ -81,6 +81,42 @@ public class MovieTrailerServiceTest {
     }
 
     @Test
+    @DisplayName("Test case - Find 2nd page movie trailers success scenario with 2 pages")
+    public void testFindMovieTrailersSecondPageSuccess() throws InterruptedException, IOException, URISyntaxException, TimeoutException, ExecutionException {
+
+        //given
+        var imdbTestItem = new ImdbItem("title", "2018", "id", null, null);
+        var otherImdbTestItem = new ImdbItem("other", "2018", "id", null, null);
+        var listImdbTestItem = new ArrayList<ImdbItem>();
+        listImdbTestItem.add(imdbTestItem);
+        listImdbTestItem.add(otherImdbTestItem);
+        var req = new RequestBean("title", "2018","NL", "en",2);
+        given(imdbService.findMoviesFromImdb(req)).willReturn(listImdbTestItem);
+        var trailer = new MovieTrailerBean("title", "2018", "poster", "trailer", "trailerName",null);
+        var othertrailer = new MovieTrailerBean("other", "2018", "poster", "trailer", "trailerName",null);
+        var movieTrailersList = new ArrayList<MovieTrailerBean>();
+        movieTrailersList.add(trailer);
+        movieTrailersList.add(othertrailer);
+        given(youtubeService.getYouTubetrailers(any(), any(), any())).willReturn(movieTrailersList);
+
+        //when
+        var response = movieTrailerService.findMovieTrailers(req);
+
+        //then
+        SoftAssertions.assertSoftly(softly -> {
+            softly.assertThat(response.get().isSuccess())
+                    .as("Check whether trailers are returned")
+                    .isEqualTo(true);
+            softly.assertThat(response.get().getMetaData().getPage())
+                    .as("Check correct page is returned.")
+                    .isEqualTo(req.getPage());
+            softly.assertThat(response.get().getData().size())
+                    .as("Check the current page size is less than the total trailers")
+                    .isLessThan(response.get().getMetaData().getTotalTrailers());
+        });
+    }
+
+    @Test
     @DisplayName("Test case - Find movie trailers success scenario with 1 page")
     public void testFindMovieTrailersSingleSuccess() throws InterruptedException, IOException, URISyntaxException, TimeoutException, ExecutionException {
 
@@ -126,6 +162,32 @@ public class MovieTrailerServiceTest {
         var req = new RequestBean("title", "2015","NL", "en",1);
         given(imdbService.findMoviesFromImdb(req)).willReturn(listImdbTestItem);
         given(youtubeService.getYouTubetrailers(any(), any(), any())).willReturn(new ArrayList<MovieTrailerBean>());
+
+        //when
+        var response = movieTrailerService.findMovieTrailers(req);
+
+        //then
+        SoftAssertions.assertSoftly(softly -> {
+            softly.assertThat(response.isPresent())
+                    .as("Check whether trailers are returned")
+                    .isEqualTo(false);
+        });
+    }
+
+    @Test
+    @DisplayName("Test case - Find movie trailers failure scenario Page is more than expected.")
+    public void testFindMovieTrailersMorePageFailure() throws InterruptedException, IOException, URISyntaxException, TimeoutException, ExecutionException {
+
+        //given
+        var imdbTestItem = new ImdbItem("title", "2018", "id", null, null);
+        var listImdbTestItem = new ArrayList<ImdbItem>();
+        listImdbTestItem.add(imdbTestItem);
+        var req = new RequestBean("title", "2018","NL", "en",3);
+        given(imdbService.findMoviesFromImdb(req)).willReturn(listImdbTestItem);
+        var trailer = new MovieTrailerBean("title", "2018", "poster", "trailer", "trailerName",null);
+        var movieTrailersList = new ArrayList<MovieTrailerBean>();
+        movieTrailersList.add(trailer);
+        given(youtubeService.getYouTubetrailers(any(), any(), any())).willReturn(movieTrailersList);
 
         //when
         var response = movieTrailerService.findMovieTrailers(req);

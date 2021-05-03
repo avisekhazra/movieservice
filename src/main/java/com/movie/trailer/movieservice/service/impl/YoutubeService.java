@@ -10,6 +10,7 @@ import com.movie.trailer.movieservice.beans.MovieTrailerBean;
 import com.movie.trailer.movieservice.beans.Thumbnails;
 import com.movie.trailer.movieservice.configurations.MovieServiceConfiguration;
 import com.movie.trailer.movieservice.service.IYoutubeService;
+import com.movie.trailer.movieservice.utils.YoutubeUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,6 +26,9 @@ public class YoutubeService implements IYoutubeService {
 
     @Autowired
     private MovieServiceConfiguration movieServiceConfiguration;
+
+    @Autowired
+    private YoutubeUtils youtubeUtils;
 
     public List<MovieTrailerBean> getYouTubetrailers(List<MovieTrailerBean> trailerList, String country, String language) throws InterruptedException, TimeoutException {
 
@@ -57,28 +61,10 @@ public class YoutubeService implements IYoutubeService {
     private List<MovieTrailerBean> getTrailers(MovieTrailerBean movieTrailerBean, String country, String language) throws IOException {
 
         var trailerList = new ArrayList<MovieTrailerBean>();
-        trailerList.addAll(filterTrailers(movieTrailerBean, findYouTubeTrailers(movieTrailerBean.getName(), country, language)));
+        trailerList.addAll(filterTrailers(movieTrailerBean, youtubeUtils.findYouTubeTrailers(movieTrailerBean.getName(), country, language)));
         return trailerList;
     }
 
-    public List<SearchResult> findYouTubeTrailers(String name, String country, String language) throws IOException {
-        var youTube = new YouTube.Builder(new NetHttpTransport(), new GsonFactory(), httpRequest -> {
-
-        }).setApplicationName("movie-trailer").build();
-        YouTube.Search.List search = youTube.search().list(Collections.singletonList("id,snippet"));
-        search.setKey(movieServiceConfiguration.getYouTube().getApiKey());
-        search.setQ(name + " trailer");
-        search.setType(Collections.singletonList("video"));
-        search.setVideoType("any");
-        search.setRegionCode(country);
-        search.setRelevanceLanguage(language);
-        search.setVideoDuration("short");
-        search.setMaxResults(25l);
-
-        var searchResponse = search.execute();
-        List<SearchResult> searchResultList = searchResponse.getItems();
-        return searchResultList;
-    }
     private ArrayList<MovieTrailerBean> filterTrailers(MovieTrailerBean movieTrailerBean, List<SearchResult> searchResultList) {
         var localList = new ArrayList<MovieTrailerBean>();
         for(SearchResult s: searchResultList){

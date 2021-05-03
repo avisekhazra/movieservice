@@ -69,14 +69,7 @@ public class MovieServiceControllerTest {
     public void getTrailersFailureMissingCountry() throws Exception {
 
         //given
-        var req = new RequestBean("title", "2016","NL", "en",0);
-        var trailer = new MovieTrailerBean();
-        trailer.setName("title");
-        trailer.setYear("2018");
-        var trailerList = new ArrayList<MovieTrailerBean>();
-        trailerList.add(trailer);
-        var res = new ResponseBean(true,trailerList,new Metadata());
-        given(movieTrailerService.findMovieTrailers(req)).willReturn(Optional.ofNullable(res));
+
         //when
 
 
@@ -97,14 +90,7 @@ public class MovieServiceControllerTest {
     public void getTrailersFailureInvalidLanguage() throws Exception {
 
         //given
-        var req = new RequestBean("title", "2016","NL", "en",0);
-        var trailer = new MovieTrailerBean();
-        trailer.setName("title");
-        trailer.setYear("2018");
-        var trailerList = new ArrayList<MovieTrailerBean>();
-        trailerList.add(trailer);
-        var res = new ResponseBean(true,trailerList,new Metadata());
-        given(movieTrailerService.findMovieTrailers(req)).willReturn(Optional.ofNullable(res));
+
         //when
 
 
@@ -120,4 +106,138 @@ public class MovieServiceControllerTest {
 
 
     }
+    @Test
+    @DisplayName("GET /trailers Test - failure Invalid Country")
+    public void getTrailersFailureInvalidCountry() throws Exception {
+
+        //given
+
+        //when
+
+
+        mockMvc.perform(get("/trailers")
+                .param("query","title")
+                .param("language","en")
+                .param("country", "NLD")
+                .param("year", "2016"))
+
+                //then
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.title").value("BAD_REQUEST"));
+
+
+    }
+
+    @Test
+    @DisplayName("GET /trailers Test - failure Invalid Year")
+    public void getTrailersFailureInvalidYear() throws Exception {
+
+        //given
+
+        //when
+
+
+        mockMvc.perform(get("/trailers")
+                .param("query","title")
+                .param("language","en")
+                .param("country", "NLD")
+                .param("year", "year"))
+
+                //then
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.title").value("BAD_REQUEST"));
+
+
+    }
+    @Test
+    @DisplayName("GET /trailers Test - failure Year not supported - after 5 years")
+    public void getTrailersFailureFutureYear() throws Exception {
+
+        //given
+
+        //when
+
+
+        mockMvc.perform(get("/trailers")
+                .param("query","title")
+                .param("language","en")
+                .param("country", "NL")
+                .param("year", "2030"))
+
+                //then
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.title").value("BAD_REQUEST"));
+
+
+    }
+
+    @Test
+    @DisplayName("GET /trailers Test - failure Invalid page")
+    public void getTrailersFailureInvalidPage() throws Exception {
+
+        //given
+
+        //when
+
+
+        mockMvc.perform(get("/trailers")
+                .param("query","title")
+                .param("language","en")
+                .param("country", "NL")
+                .param("year", "2020")
+                .param("page", "page"))
+
+                //then
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.title").value("BAD_REQUEST"));
+
+
+    }
+
+    @Test
+    @DisplayName("GET /trailers Test - failure Negative page")
+    public void getTrailersFailureNegativePage() throws Exception {
+
+        //given
+
+        //when
+
+
+        mockMvc.perform(get("/trailers")
+                .param("query","title")
+                .param("language","en")
+                .param("country", "NL")
+                .param("year", "2020")
+                .param("page", "-1"))
+
+                //then
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.title").value("BAD_REQUEST"));
+
+
+    }
+
+    @Test
+    @DisplayName("GET /trailers Test - failure Invalid query")
+    public void getTrailersFailureInvalidQuery() throws Exception {
+
+        //given
+
+        //when
+
+
+        mockMvc.perform(get("/trailers")
+                .param("query","ti")
+                .param("language","en")
+                .param("country", "NL")
+                .param("year", "2020"))
+
+                //then
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.title").value("BAD_REQUEST"));
+
+
+    }
+
+
 }
