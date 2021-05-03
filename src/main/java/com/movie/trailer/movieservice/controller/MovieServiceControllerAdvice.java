@@ -2,6 +2,7 @@ package com.movie.trailer.movieservice.controller;
 
 import com.movie.trailer.movieservice.beans.RequestBean;
 import com.movie.trailer.movieservice.exception.beans.TrailersNotFoundException;
+import lombok.extern.slf4j.Slf4j;
 import org.hibernate.validator.constraints.pl.REGON;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.*;
 
+@Slf4j
 @ControllerAdvice(assignableTypes = {MovieServiceController.class})
 public class MovieServiceControllerAdvice {
 
@@ -26,7 +28,8 @@ public class MovieServiceControllerAdvice {
     ) throws TrailersNotFoundException {
         validateInput(query, year, country, language, page);
         var rb = new RequestBean();
-        rb.setQuery(query.trim());
+        log.info("query ={}",query);
+        rb.setQuery(query.trim().replaceAll("\\+"," "));
         rb.setYear(year!=null && !year.isBlank()? year.trim(): year);
         rb.setCountry(country);
         rb.setLanguage(language);
