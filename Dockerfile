@@ -2,6 +2,7 @@ FROM openjdk:11-jdk as build
 WORKDIR /workspace/app
 
 COPY mvnw .
+RUN chmod +x ./mvnw
 COPY .mvn .mvn
 COPY pom.xml .
 COPY src src
