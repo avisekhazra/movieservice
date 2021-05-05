@@ -8,13 +8,10 @@ Instructions to deploy the solution to local,
 
 ## System requirements
 
-Java 11
-
-Docker compose 3.8
-
-Docker Engine version **19.03.0** and higher
-
-Maven 3.3.9 +
+- Java 11
+- Docker compose 3.8
+- Docker Engine version **19.03.0** and higher
+- Maven 3.3.9 +
 
 ## Application Overview
 
@@ -44,6 +41,8 @@ API GW cache has been enabled with a TTL of 300s.
 API endpoint is private and requires OAuth token to access the endpoint. OAuth client_credentials flow has been implemented which means that the API should be integrated with BE service.  Authorization is offloaded to API GW.
 
 API GW is configured with API keys which helps to implement some of the DDoS mitigation mechanisms as by throttling the requests.
+
+Application layer could be further secured by proposed private network in the desired architecture.
 
 #### Scalability
 
@@ -83,9 +82,16 @@ Test coverage report is located at -  ~ /target/site/jacoco/index.html
 Application is dockerized with two containers - Application container and Redis container as Sidecar pattern (docker compose).
 
 
+## Improvements
 
+- Monitoring to be implemented.
+- Unit test coverage to be improved.
+- Multi lingual support for the API.
+- Auto suggest for the search.
+- Integration test cases.
+- Infrastruce as code.
 #### Desired architecture
-![image](https://user-images.githubusercontent.com/19636598/117209409-93e8ce00-adf6-11eb-9a67-05c054082c81.png)
+![image](https://user-images.githubusercontent.com/19636598/117210857-86344800-adf8-11eb-9ade-d34a8feda645.png)
 
 
 
