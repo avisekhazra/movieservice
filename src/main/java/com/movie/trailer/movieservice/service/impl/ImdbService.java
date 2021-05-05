@@ -35,6 +35,9 @@ public class ImdbService implements IImdbService {
     @Value("${imdb.rapidApi.timeout:5000}")
     private long timeout;
 
+    @Value("${imdb.rapidApi.maxTrailers:100}")
+    private long maxTrailers;
+
     private static final int PAGE_SIZE = 10;
 
     @Override
@@ -48,7 +51,7 @@ public class ImdbService implements IImdbService {
                 var pagedResults = findMoviesImdbByPage(query,req.getYear(),page);
                 if ("True".equalsIgnoreCase(pagedResults.getResponse())){
                     imdbData.addAll(pagedResults.getSearch());
-                    if(pagedResults.getSearch().size()==PAGE_SIZE) {
+                    if(pagedResults.getSearch().size()==PAGE_SIZE && imdbData.size() < maxTrailers) {
                         page++;
                     } else recursion = false;
                 } else recursion = false;

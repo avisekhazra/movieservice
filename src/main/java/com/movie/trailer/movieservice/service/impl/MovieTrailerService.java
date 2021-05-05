@@ -32,7 +32,9 @@ public class MovieTrailerService implements IMovieTrailerService {
     private static final String CONTROLLED_PREFIX = "movietrailer111_";
 
     public static String getCacheKey(RequestBean bean){
-        return CONTROLLED_PREFIX + URLEncoder.encode(bean.getQuery(),StandardCharsets.UTF_8) + "_" + bean.getYear() + "_" + bean.getPage();
+        return CONTROLLED_PREFIX + URLEncoder.encode(bean.getQuery(),StandardCharsets.UTF_8)
+                + "_" + bean.getYear() + "_" + bean.getPage()
+                + "_" + bean.getCountry() + "_" + bean.getLanguage();
     }
 
     @Cacheable(cacheNames = "movieServiceCacheNew", key = "T(com.movie.trailer.movieservice.service.impl.MovieTrailerService).getCacheKey(#bean)")
