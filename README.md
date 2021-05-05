@@ -19,7 +19,8 @@ Maven 3.3.9 +
 ## Application Overview
 
 #### Current Architecture
-![image](https://user-images.githubusercontent.com/19636598/117209341-82072b00-adf6-11eb-83a8-72b59f3f63f7.png)
+![image](https://user-images.githubusercontent.com/19636598/117209519-ba0e6e00-adf6-11eb-88c1-c95f80e2931b.png)
+
 
 
 
