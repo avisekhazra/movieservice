@@ -19,7 +19,8 @@ Maven 3.3.9 +
 ## Application Overview
 
 #### Current Architecture
-![image](https://user-images.githubusercontent.com/19636598/116925298-4be07480-ac59-11eb-8eb5-15cbea324736.png)
+![image](https://user-images.githubusercontent.com/19636598/117209341-82072b00-adf6-11eb-83a8-72b59f3f63f7.png)
+
 
 
 
@@ -83,7 +84,8 @@ Application is dockerized with two containers - Application container and Redis 
 
 
 #### Desired architecture
-![image](https://user-images.githubusercontent.com/19636598/116925339-5a2e9080-ac59-11eb-80e3-0a164d2f1d4f.png)
+![image](https://user-images.githubusercontent.com/19636598/117209409-93e8ce00-adf6-11eb-9a67-05c054082c81.png)
+
 
 
 
